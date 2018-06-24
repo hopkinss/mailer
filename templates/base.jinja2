@@ -13,11 +13,12 @@
 
 
 <div class="container-fluid">
-  <div class="jumbotron" style="margin: 0px;">
+  <div class="carousel" style="margin: 0px;background-color:#DDECEE;">
     <h1 style="font-variant: small-caps;color:#2e6da4;">Flask Mailroom</h1>
   </div>
   <nav class="navbar-collapse" style="background-color:#dff0d8;">
        <a title="Home" class="navbar-brand" href={{ url_for('all')}}><i class="fas fa-home my-icon"></i></a>
+       <a title="Search for a donor" class="navbar-brand" href={{ url_for('donors')}}><i class="fab fa-searchengin"></i></a>
        <a title="Add a donor" class="navbar-brand"     href={{ url_for('create')}}><i class="fas fa-user-plus my-icon"></i></a>
        <a title="Donors by total" class="navbar-brand" href={{ url_for('bar')}}><i class="fas fa-chart-bar my-icon"></i></a>
 

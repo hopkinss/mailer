@@ -1,11 +1,22 @@
 {% extends 'base.jinja2' %}
 
-{% block subtitle %}Donations{% endblock subtitle %}
+{% block subtitle %}Donations for All Donors{% endblock subtitle %}
+
 
 {% block content %}
-<ul>
-    {% for donation in donations %}
-        <li><b>{{ donation.donor.name }}</b>: {{ donation.value }}</li>
-    {% endfor %}
-</ul>
+     <table border="1" width="50%" class="blueTable" >
+        <tr>
+            <th>Donor</th><th>Donations</th>
+        </tr>
+         <tbody>
+          {% for i in donations %}
+              <tr>
+              <td >{{ i.name }}</td><td>{{ i.donations }}</td>
+              </tr>
+
+          {% endfor %}
+
+         </tbody>
+     </table>
 {% endblock content %}
+
