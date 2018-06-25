@@ -18,6 +18,9 @@ class Donation(Model):
     class Meta:
         database = db
 
+
+
+
 def get_total():
     qry=(Donor.select(Donor.name ,fn.SUM(Donation.value).alias("total") )
           .join(Donation)
@@ -67,3 +70,22 @@ def get_donations_list(name):
 
         dlist.append(vals)
     return dlist
+
+
+def add_donation(donor_name,amount):
+
+    qry=Donor.select().where(Donor.name==donor_name)
+    if qry.exists():
+        d=Donor.get(Donor.name==donor_name)
+        Donation(donor=d, value=amount).save()
+        return f"New donation for {donor_name} added"
+    else:
+        new_donor = Donor(name=donor_name)
+        new_donor.save()
+        Donation(donor=new_donor,value=amount).save()
+        return f"{donor_name} added to the database"
+
+
+
+
+

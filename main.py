@@ -3,7 +3,7 @@ import base64
 import requests
 
 from flask import Flask, render_template, request, redirect, url_for, session
-from model import Donation,Donor,get_total,get_donors,get_donor_list,get_donations_list
+from model import Donation,Donor,get_total,get_donors,get_donor_list,get_donations_list,add_donation
 from flask import make_response
 from functools import wraps, update_wrapper
 from datetime import datetime
@@ -43,6 +43,9 @@ def all():
     donations=get_donors()
     return render_template('donations.jinja2', donations=donations)
 
+
+
+
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     """
@@ -56,15 +59,19 @@ def create():
             if val<10:
                 return render_template('create.jinja2',name=name)
             else:
-                donor=Donor(name=request.form['name'])
-                donor.save()
-                Donation(donor=donor, value= float(request.form['donation'])).save()
+                name=request.form['name']
+                donation=float(request.form['donation'])
+                msg=add_donation(name,donation)
                 return redirect(url_for('all'))
         except ValueError:
             return render_template('create.jinja2', name=name)
 
     else:
         return render_template('create.jinja2',name="")
+
+
+
+
 
 @app.route('/bar/')
 @nocache
@@ -91,7 +98,15 @@ def donors():
         selected_donor=donor_list[0]
         return render_template('donors.jinja2', donor_list=donor_list,donations=donations,selected_donor=selected_donor)
 
-
+@app.route('/pie/')
+@nocache
+def pie():
+    palette = ["#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA", "#ABCDEF", "#DDDDDD", "#ABCABC"]
+    data = get_total()
+    values=list([i.name for i in data])
+    labels=list([i.total for i in data])
+    colors=palette[:4]
+    return render_template('pie.jinja2', set=zip(labels,values,colors))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,30 @@
+{% extends 'base.jinja2' %}
+
+{% block subtitle %}Percent of Total by Donor{% endblock subtitle %}
+
+{% block content %}
+
+    <canvas style="border:1px blue solid;margin: 10px;" id="chart" width="600" height="600"></canvas>
+<script>
+   var pieData = [
+            {% for item,label,colors in set %}
+                {
+                    value: {{item}},
+                    label: "{{label}}",
+                    color : "{{colors}}"
+                },
+                {% endfor %}
+
+
+         ];
+
+   // get bar chart canvas
+   var mychart = document.getElementById("chart").getContext("2d");
+
+   steps = 4
+   max = 4
+   // draw pie chart
+   new Chart(document.getElementById("chart").getContext("2d")).Pie(pieData);
+
+</script>
+{% endblock content %}
