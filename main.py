@@ -2,6 +2,7 @@ import os
 import base64
 import requests
 from passlib.hash import pbkdf2_sha256
+import random
 
 from flask import Flask, render_template, request, redirect, url_for, session
 from model import Donation,Donor, get_total,get_donors,get_donor_list,get_donations_list,add_donation, User
@@ -124,11 +125,13 @@ def pie():
     Create pie graph of total donations by total by donor
     :return: pie template
     """
-    palette = ["#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA", "#ABCDEF", "#DDDDDD", "#ABCABC"]
     data = get_total()
     values=list([i.name for i in data])
     labels=list([i.total for i in data])
-    colors=palette[:4]
+    colors=[]
+    for i in range(len(values)):
+        colors.append("#%06x" % random.randint(0, 0xFFFFFF))
+
     return render_template('pie.jinja2', set=zip(labels,values,colors),welcome=welcome())
 
 @app.route('/login', methods=['GET', 'POST'])

@@ -111,6 +111,7 @@ def add_donation(donor_name,amount):
         return f"{donor_name} added to the database"
 
 
-
-
-
+# x=get_total()
+# for i in x:
+#     print(i.name)
+# y=1
