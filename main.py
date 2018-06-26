@@ -139,7 +139,13 @@ def login():
 
     else:
         return render_template('login.jinja2',welcome=welcome())
-
+@app.route('/logout')
+def logout():
+    try:
+        session.pop('username')
+        return  redirect(url_for('all'))
+    except:
+        return redirect(url_for('all'))
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 6738))
