@@ -7,22 +7,30 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <script src='/static/Chart.min.js'></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
 
 
-<div class="container-fluid">
-  <div class="carousel" style="margin: 0px;background-color:#DDECEE;">
-    <h1 style="font-variant: small-caps;color:#2e6da4;">Flask Mailroom</h1>
-  </div>
-  <nav class="navbar-collapse" style="background-color:#dff0d8;">
-       <a title="Home" class="navbar-brand" href={{ url_for('all')}}><i class="fas fa-home my-icon"></i></a>
-       <a title="Search for a donor" class="navbar-brand" href={{ url_for('donors')}}><i class="fab fa-searchengin"></i></a>
-       <a title="Add a donor" class="navbar-brand"     href={{ url_for('create')}}><i class="fas fa-user-plus my-icon"></i></a>
-       <a title="Donors by total" class="navbar-brand" href={{ url_for('bar')}}><i class="fas fa-chart-bar my-icon"></i></a>
-       <a title="Distribution of Total Donation by Donor" class="navbar-brand" href={{ url_for('pie')}}><i class="fas fa-chart-pie"></i></a>
-    </nav>
+<div class="container-fluid" >
+  <div class="carousel" style="margin: 0px;background-color:#0f0f0f;">
+    <h1 style="font-variant: small-caps;color:#e38d13;"><i class="fab fa-mailchimp">&nbsp;&nbsp;</i>Flask Mailroom</h1>
+      <div style="float:right;color:#e38d13;margin-right: 15px;">
+          <i>{{ welcome }}</i>
+      </div><br/>
+
+      <nav class="navbar-collapse">
+           <a title="Home" class="navbar-brand" href={{ url_for('all')}}><i class="fas fa-home my-icon"></i></a>
+           <a title="Search for a donor" class="navbar-brand" href={{ url_for('donors')}}><i class="fab fa-searchengin"></i></a>
+           <a title="Add a donor" class="navbar-brand"     href={{ url_for('create')}}><i class="fas fa-user-plus my-icon"></i></a>
+           <a title="Donors by total" class="navbar-brand" href={{ url_for('bar')}}><i class="fas fa-chart-bar my-icon"></i></a>
+           <a title="Distribution of Total Donation by Donor" class="navbar-brand" href={{ url_for('pie')}}><i class="fas fa-chart-pie"></i></a>
+           <div style="float: right;margin-right: 10px;">
+             <a title="Sign in" class="navbar-brand" href={{ url_for('login')}}><i class="fas fa-sign-in-alt my-icon"></i></a>
+           </div>
+        </nav>
+    </div>
 </div>
 	<h2>{% block subtitle %} {% endblock subtitle %}</h2>
 	{% block content %} {% endblock content %}
