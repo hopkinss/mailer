@@ -1,4 +1,4 @@
-Failed to deploy to Heroku  - i couldnt get any of the instructions to work
+http://lit-thicket-33953.herokuapp.com/donations/
 
 Optional features
 1) Create donor
