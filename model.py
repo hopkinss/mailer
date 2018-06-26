@@ -25,14 +25,6 @@ class User(Model):
     class Meta:
         database = db
 
-
-
-def get_total():
-    qry=(Donor.select(Donor.name ,fn.SUM(Donation.value).alias("total") )
-          .join(Donation)
-          .group_by(Donor.name))
-    return qry
-
 class DonorView():
     def __init__(self,name):
         self.name=name
@@ -42,7 +34,22 @@ class DonorView():
         self.donations="<br />".join(donations)
 
 
+
+def get_total():
+    """
+    Aggregate donations by user
+    :return:
+    """
+    qry=(Donor.select(Donor.name ,fn.SUM(Donation.value).alias("total") )
+          .join(Donation)
+          .group_by(Donor.name))
+    return qry
+
 def get_donors():
+    """
+    Get a list of donors with donatations formatted in dollars
+    :return:
+    """
     dlist=[]
     donors=Donor.select()
 
@@ -57,6 +64,10 @@ def get_donors():
     return dlist
 
 def get_donor_list():
+    """
+    Get a list of unique donor names
+    :return:
+    """
     dlist=[]
     for v in Donor.select():
         dlist.append(v.name)
@@ -64,6 +75,11 @@ def get_donor_list():
     return dlist
 
 def get_donations_list(name):
+    """
+    get a formatted list of donations for a specific donor
+    :param name:
+    :return:
+    """
     dlist = []
     donors = Donor.select()
 
@@ -72,14 +88,17 @@ def get_donations_list(name):
         vals = []
         for v in d.donations:
             vals.append("$" + str(v.value))
-
-
         dlist.append(vals)
     return dlist
 
 
 def add_donation(donor_name,amount):
-
+    """
+    If donor exists, add donation, otherwise create new donor
+    :param donor_name: (str) name of donor
+    :param amount: (float) amount of donation
+    :return:
+    """
     qry=Donor.select().where(Donor.name==donor_name)
     if qry.exists():
         d=Donor.get(Donor.name==donor_name)

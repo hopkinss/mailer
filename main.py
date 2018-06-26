@@ -30,11 +30,15 @@ def nocache(view):
 def home():
     """
     Default path
-    :return: link to all donations
+    :return: all template
     """
     return redirect(url_for('all'))
 
 def welcome():
+    """
+    Display welcome message to logged in user
+    :return: string
+    """
     msg=""
     if 'username' in session:
         user = session['username']
@@ -46,21 +50,19 @@ def welcome():
 def all():
     """
     List of all donors
-    :return: All donations
+    :return: donations template
     """
-
-
     donations=get_donors()
     return render_template('donations.jinja2', donations=donations,welcome=welcome())
-
-
 
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     """
-    Create a new donor if values are appropriate
-    :return:
+    If existing donor, add donation, otherwise create new donor
+     - donation must be >10
+    :return: GET - create template
+             POST - donations template
     """
     if 'username' not in session:
         return redirect(url_for('login'))
@@ -82,13 +84,13 @@ def create():
     else:
         return render_template('create.jinja2',name="",welcome=welcome())
 
-
-
-
-
 @app.route('/bar/')
 @nocache
 def bar():
+    """
+    Create bar chart of donor vs donation total
+    :return:  bar template
+    """
     data = get_total()
     labels=list([i.name for i in data])
     values=list([i.total for i in data])
@@ -98,8 +100,10 @@ def bar():
 @app.route('/donors', methods=['GET', 'POST'])
 @nocache
 def donors():
-
-
+    """
+    Select user and display users donations
+    :return:  donors template
+    """
     if request.method == 'POST':
         val = request.form['target']
         donations = get_donations_list(val)
@@ -116,6 +120,10 @@ def donors():
 @app.route('/pie/')
 @nocache
 def pie():
+    """
+    Create pie graph of total donations by total by donor
+    :return: pie template
+    """
     palette = ["#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA", "#ABCDEF", "#DDDDDD", "#ABCABC"]
     data = get_total()
     values=list([i.name for i in data])
@@ -125,6 +133,10 @@ def pie():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Login page. Must be one of registered users to create a donation
+    :return: login template
+    """
     if request.method == 'POST':
         username=request.form['name']
         passwrd=request.form['password']
@@ -140,7 +152,12 @@ def login():
     else:
         return render_template('login.jinja2',welcome=welcome())
 @app.route('/logout')
+
 def logout():
+    """
+    Delete the username session item
+    :return: donations template
+    """
     try:
         session.pop('username')
         return  redirect(url_for('all'))

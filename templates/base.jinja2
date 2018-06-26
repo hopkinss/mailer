@@ -27,8 +27,11 @@
            <a title="Donors by total" class="navbar-brand" href={{ url_for('bar')}}><i class="fas fa-chart-bar my-icon"></i></a>
            <a title="Distribution of Total Donation by Donor" class="navbar-brand" href={{ url_for('pie')}}><i class="fas fa-chart-pie"></i></a>
            <div style="float: right;margin-right: 10px;">
-             <a title="Sign in" class="navbar-brand" href={{ url_for('login')}}><i class="fas fa-sign-in-alt my-icon"></i></a>
-             <a title="Sign out" class="navbar-brand" href={{ url_for('logout')}}><i class="fas fa-sign-out-alt my-icon"></i></a>
+            {% if welcome =="" %}
+                <a title="Sign in" class="navbar-brand" href={{ url_for('login')}}><i class="fas fa-sign-in-alt my-icon"></i></a>
+            {% else %}
+                <a title="Sign out" class="navbar-brand" href={{ url_for('logout')}}><i class="fas fa-sign-out-alt my-icon"></i></a>
+            {% endif %}
            </div>
         </nav>
     </div>
