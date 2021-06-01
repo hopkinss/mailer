@@ -17,7 +17,7 @@ pipenv==2018.6.25
 psycopg2==2.7.5
 python-dateutil==1.5
 requests==2.19.1
-urllib3==1.23
+urllib3==1.26.5
 virtualenv==16.0.0
 virtualenv-clone==0.3.0
 visitor==0.1.3
